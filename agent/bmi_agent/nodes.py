@@ -43,3 +43,23 @@ def calculate_bmi(state: AgentState) -> AgentState:
         height,
     )
     return {"bmi": bmi}
+
+
+def label_bmi(state: AgentState) -> AgentState:
+    """Labels the BMI category."""
+    logger.info("[Node: label_bmi] Executing")
+    logger.debug("[Node: label_bmi] Received state: %s", state)
+
+    bmi = state["bmi"]
+    if bmi < 18.5:
+        bmi_category = "Underweight"
+    elif bmi < 25:
+        bmi_category = "Normal weight"
+    elif bmi < 30:
+        bmi_category = "Overweight"
+    else:
+        bmi_category = "Obesity"
+    state["bmi_category"] = bmi_category
+
+    logger.info("[Node: label_bmi] Labeled BMI category: %s", bmi_category)
+    return {"bmi_category": bmi_category}
