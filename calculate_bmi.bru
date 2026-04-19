@@ -1,0 +1,16 @@
+meta {
+  name: Calculate BMI
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/agent/bmi
+}
+
+body:json {
+  {
+    "weight": 70,
+    "height": 1.75
+  }
+}
