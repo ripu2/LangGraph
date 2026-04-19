@@ -5,10 +5,12 @@ from agent.weather_agent.graph import build_graph
 
 logger = setup_logger(__name__)
 
+_weather_graph = build_graph()
+
 
 class WeatherController:
     def __init__(self):
-        self.graph = build_graph()
+        self.graph = _weather_graph
         logger.debug("WeatherController initialized with compiled graph")
 
     def get_weather(self, request: WeatherRequest):
