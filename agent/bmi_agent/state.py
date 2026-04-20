@@ -5,3 +5,4 @@ class AgentState(TypedDict, total=False):
     weight_kg: float
     height_m: float
     bmi: float
+    bmi_category: str

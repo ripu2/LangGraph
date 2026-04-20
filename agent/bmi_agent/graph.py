@@ -1,6 +1,6 @@
 from langgraph.graph import StateGraph, START, END
 from agent.bmi_agent.state import AgentState
-from agent.bmi_agent.nodes import validate_input, calculate_bmi
+from agent.bmi_agent.nodes import validate_input, calculate_bmi, label_bmi
 from app.logger import setup_logger
 
 logger = setup_logger(__name__)
@@ -18,18 +18,24 @@ def build_graph():
     graph.add_node("calculate_bmi", calculate_bmi)
     logger.debug("Added node: calculate_bmi")
 
+    graph.add_node("label_bmi", label_bmi)
+    logger.debug("Added node: label_bmi")
+
     graph.add_edge(START, "validate_input")
     logger.debug("Added edge: START -> validate_input")
 
     graph.add_edge("validate_input", "calculate_bmi")
     logger.debug("Added edge: validate_input -> calculate_bmi")
 
-    graph.add_edge("calculate_bmi", END)
-    logger.debug("Added edge: calculate_bmi -> END")
+    graph.add_edge("calculate_bmi", "label_bmi")
+    logger.debug("Added edge: calculate_bmi -> label_bmi")
+
+    graph.add_edge("label_bmi", END)
+    logger.debug("Added edge: label_bmi -> END")
 
     compiled = graph.compile()
     logger.info(
-        "Agent graph compiled | nodes=[validate_input, calculate_bmi] | "
-        "flow: START -> validate_input -> calculate_bmi -> END"
+        "Agent graph compiled | nodes=[validate_input, calculate_bmi, label_bmi ] | "
+        "flow: START -> validate_input -> calculate_bmi -> label_bmi -> END"
     )
     return compiled

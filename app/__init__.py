@@ -3,7 +3,7 @@ import uuid
 
 from fastapi import FastAPI, Request
 from app.logger import setup_logger
-from app.routes import bmi, health
+from app.routes import agnets, health
 
 logger = setup_logger(__name__)
 
@@ -54,8 +54,8 @@ def create_app() -> FastAPI:
 
     app.include_router(health.router)
     logger.debug("Registered health routes")
-    app.include_router(bmi.router)
-    logger.debug("Registered BMI agent routes")
+    app.include_router(agnets.router)
+    logger.debug("Registered agent routes")
 
     logger.info("FastAPI application initialized successfully")
     return app
