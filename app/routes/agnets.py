@@ -1,8 +1,10 @@
 from fastapi import APIRouter
 
+from app.controllers.blog_controller import BlogController
 from app.controllers.bmi_controller import BMIController
 from app.controllers.weather_controller import WeatherController
 from app.logger import setup_logger
+from app.schemas.blog_schema import BlogRequest
 from app.schemas.bmi_schema import CalculateBMIRequest
 from app.schemas.weather_schema import WeatherRequest
 
@@ -40,4 +42,16 @@ def get_weather(request: WeatherRequest):
         return result
     except Exception as exc:
         logger.error("Weather endpoint failed | error=%s", str(exc), exc_info=True)
+        raise
+
+
+@router.post("/blog")
+def generate_blog(request: BlogRequest):
+    logger.info("Blog endpoint called | title=%s", request.title)
+    try:
+        result = BlogController().generate_blog(request)
+        logger.info("Blog endpoint completed successfully | result=%s", result)
+        return result
+    except Exception as exc:
+        logger.error("Blog endpoint failed | error=%s", str(exc), exc_info=True)
         raise
