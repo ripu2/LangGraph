@@ -3,11 +3,13 @@ from fastapi import APIRouter
 from app.controllers.blog_controller import BlogController
 from app.controllers.bmi_controller import BMIController
 from app.controllers.cricket_controlle import CricketController
+from app.controllers.roots_controller import RootsController
 from app.controllers.weather_controller import WeatherController
 from app.logger import setup_logger
 from app.schemas.blog_schema import BlogRequest
 from app.schemas.bmi_schema import CalculateBMIRequest
 from app.schemas.cricket_schema import CricketRequest
+from app.schemas.roots_schema import RootRequest
 from app.schemas.weather_schema import WeatherRequest
 
 logger = setup_logger(__name__)
@@ -74,4 +76,18 @@ def compute_strike_rate(request: CricketRequest):
         return result
     except Exception as exc:
         logger.error("Cricket endpoint failed | error=%s", str(exc), exc_info=True)
+        raise
+
+
+@router.post("/roots")
+def find_roots(request: RootRequest):
+    logger.info(
+        "Roots endpoint called | a=%d, b=%d, c=%d", request.a, request.b, request.c
+    )
+    try:
+        result = RootsController().find_roots(request)
+        logger.info("Roots endpoint completed successfully | result=%s", result)
+        return result
+    except Exception as exc:
+        logger.error("Roots endpoint failed | error=%s", str(exc), exc_info=True)
         raise
