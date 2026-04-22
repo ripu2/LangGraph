@@ -11,7 +11,10 @@ class ChatModelConfig:
 
 
 class ModelConfig:
-    natural = ChatModelConfig(model="gpt-4.1", temperature=1.2)
+    natural = ChatModelConfig(model="gpt-4.1", temperature=0.5)
+    generator = ChatModelConfig(model="gpt-4o", temperature=0.5)
+    evaluator = ChatModelConfig(model="gpt-4o-mini", temperature=0)
+    optimizer = ChatModelConfig(model="gpt-4o", temperature=0.5)
 
 
 model_config = ModelConfig()

@@ -4,12 +4,14 @@ from app.controllers.blog_controller import BlogController
 from app.controllers.bmi_controller import BMIController
 from app.controllers.cricket_controlle import CricketController
 from app.controllers.roots_controller import RootsController
+from app.controllers.tweet_controller import TweetController
 from app.controllers.weather_controller import WeatherController
 from app.logger import setup_logger
 from app.schemas.blog_schema import BlogRequest
 from app.schemas.bmi_schema import CalculateBMIRequest
 from app.schemas.cricket_schema import CricketRequest
 from app.schemas.roots_schema import RootRequest
+from app.schemas.tweet_schema import TweetRequest
 from app.schemas.weather_schema import WeatherRequest
 
 logger = setup_logger(__name__)
@@ -90,4 +92,16 @@ def find_roots(request: RootRequest):
         return result
     except Exception as exc:
         logger.error("Roots endpoint failed | error=%s", str(exc), exc_info=True)
+        raise
+
+
+@router.post("/tweet")
+def generate_tweet(request: TweetRequest):
+    logger.info("Tweet endpoint called | topic=%s", request.topic)
+    try:
+        result = TweetController().generate_tweet(request)
+        logger.info("Tweet endpoint completed successfully | result=%s", result)
+        return result
+    except Exception as exc:
+        logger.error("Tweet endpoint failed | error=%s", str(exc), exc_info=True)
         raise
