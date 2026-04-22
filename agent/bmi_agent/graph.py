@@ -13,7 +13,7 @@ def build_graph():
     logger.debug("StateGraph created with AgentState schema")
 
     graph.add_node("validate_input", validate_input)
-    logger.debug("Added node: validate_input")
+    logger.debug("Added nodede: validate_input")
 
     graph.add_node("calculate_bmi", calculate_bmi)
     logger.debug("Added node: calculate_bmi")
